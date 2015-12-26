@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Dynamically get user id.
+user=$(id -un)
+
+# Set source folder for wallpapers
+src="/home/${user}/Pictures"
+
+# Method to get list of files.
+# Gets all files in the src directory.
+search="find "${src}" -type f"
+
+# Pick an image by getting a list of names, shuffling them, and picking one.
+img="$(${search} | shuf -n 1)"
+
+# Set the environment to run pcmanfm, and use it to set the wallpaper.
+env DISPLAY=":0.0" pcmanfm -w "${img}"
+
+# All done!
+exit 0
