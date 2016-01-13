@@ -1,4 +1,4 @@
-#!/bin/bash -ue
+#!/bin/bash -uef
 
 # Set source folder for wallpapers.
 # Users will likley only need to edit this line.
@@ -6,8 +6,8 @@ src="${HOME}/Pictures/Wallpapers/Use"
 
 # Method to get list of files.
 # Gets all files in the src directory.
-search="find ${src} -type f -readable -iname *.jpg -o -iname *.png -o -iname *.jpeg \
--o -iname *.bmp"
+search="find ${src} -type f -readable -iname *.jpg -o -iname *.png -o -iname \
+*.jpeg -o -iname *.bmp"
 
 # Count the number of pictures we can use.
 wallpaper_count=$(${search} | wc -l)
@@ -31,7 +31,7 @@ duplicate=1
 loops=0
 
 # Keep trying until we either time out, or get a new wallpaper.
-while [[ (${duplicate} -eq 1) && (loops -lt 5) ]]
+while [[ ${duplicate} -eq 1 && loops -lt 5 ]]
 do
     # Count up to make sure we don't go round forever.
     ((loops+=1))
