@@ -1,13 +1,26 @@
 #!/bin/bash -uef
 
+# REMOVE THIS IF YOU'RE USING A SINGLE DESKTOP ENVIRONMENT
+# Code takes a guess at the current desktop environment.
+# This is used to decide the wallpaper switching mechanism.
+for de in i3 lxde ; do
+    pgrep ${de} > /dev/null 2>&1
+    if [[ $? -eq 0 ]]
+    then
+        break
+    else
+        de=none
+    fi
+done
+
 # Set source folder for wallpapers.
 # Users will likley only need to edit this line.
-src="${HOME}/Pictures/Wallpapers/Use"
+src="${HOME}/Pictures/Wallpapers/Use/"
 
 # Method to get list of files.
 # Gets all files in the src directory.
-search="find ${src} -type f -readable -iname *.jpg -o -iname *.png -o -iname \
-*.jpeg -o -iname *.bmp"
+search="find ${src} -type f -readable -iname *.jpg -o -iname *.png -o -iname *.jpeg -o \
+-iname *.bmp"
 
 # Count the number of pictures we can use.
 wallpaper_count=$(${search} | wc -l)
@@ -63,7 +76,13 @@ fi
 echo ${img} > ${lockfile}
 
 # Set the environment to run pcmanfm, and use it to set the wallpaper.
-env DISPLAY=":0.0" pcmanfm -w "${img}"
+if [[ "$de" == "i3" ]]
+then
+    env DISPLAY=":0.0" feh --bg-scale "${img}"
+elif [[ "$de" == "lxde" ]]
+then
+    env DISPLAY=":0.0" pcmanfm -w "${img}"
+fi
 
 # All done!
 exit 0
