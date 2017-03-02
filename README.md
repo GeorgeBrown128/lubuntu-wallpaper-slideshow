@@ -1,4 +1,4 @@
-# lubuntu-wallpaper-slideshow
+# lxde-wallpaper-slideshow
 Quick program to allow wallpaper slideshows on Lubuntu, or any distro with PCManFM desktop management.
 
 Wallpapers are selected randomly from a given directory. The time between wallpapers is set with a simple cron job.
